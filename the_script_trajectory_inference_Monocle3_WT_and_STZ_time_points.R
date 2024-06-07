@@ -3,31 +3,19 @@
 ###########################################################################################################
 ###########################################################################################################
 ###########################################################################################################
-## srun -A jlgoldbe --mail-user=tanasa@gmail.com --mail-type=ALL --job-name "InteractiveJob" -n 8 --mem-per-cpu 20000 --time 120:00:00 --pty bash
 
-# VERY IMPORTANT : to USE on SLRUM : 
-# module load r/4.0.3
-
-# the LOCATION of the FILES is :
-# /oak/stanford/scg/lab_suiwang/scRNAseq/SUI_data_scRNAseq_z_to_aggregate_protocol2_all_WT_matrices_versus_all_STZ_matrices_to_compare_SEURAT3_v3
-
-# the FILE is : 
 # integrated.integration.SEURAT.reciprocalPCA.RData.after.plotly3D.RData
-
-#####################################################################################################################################  MONOCLE3
-#####################################################################################################################################  MONOCLE3
-
-# on the SLURM
 # module load r/4.0.3
-# R
-# in order to use the LIBRARIES below :
+
+#####################################################################################################################################  MONOCLE3
+#####################################################################################################################################  MONOCLE3
 
 set.seed(423)
 
 library(Cairo)
 options(bitmapType='cairo')
 library(sf)
-#library(rgl)
+# library(rgl)
 library(patchwork)
 
 library(monocle3)
@@ -60,7 +48,7 @@ library("RColorBrewer")
 library("grid")
 library("ggplot2")
 
-# library("ClusterExperiment") ### ??? not needed !
+# library("ClusterExperiment") 
 library("circlize")
 library("pheatmap")
 library(ComplexHeatmap)
@@ -89,7 +77,7 @@ options(future.globals.maxSize = 64000 * 1024^2)
 ##################################################################################################################################### # perhaps we can start the script here
 ##################################################################################################################################### # and redo the UMAP on 3 D COMPONENTS !!!!!!!!!!!!!!!!!!!
 
-setwd("/oak/stanford/scg/lab_suiwang/scRNAseq/SUI_data_scRNAseq_z_to_aggregate_protocol2_all_WT_matrices_versus_all_STZ_matrices_to_compare_SEURAT3_v3")
+setwd("/oak/stanford/scg/lab_suiwang/")
 load("./integrated.integration.SEURAT.reciprocalPCA.RData.after.plotly3D.RData")
 
 NAME = "MONOCLE.figs"
@@ -102,7 +90,7 @@ samples.combined.list.combined@meta.data
 #####################################################################################################################################
 ##################################################################################################################################### PRINTING the META.DATA
 
-### THE OBJECT contains all the CLUSTERS, including MULLER GLIA, we do print META.DATA !!!!!!!!
+### THE OBJECT contains all the CLUSTERS, including MULLER GLIA, we do print META.DATA
 
 write.table(as.data.frame(samples.combined.list.combined@meta.data),
             file=paste(NAME, "the meta.data.txt", sep="."), sep="\t", quote=FALSE, col.names = TRUE, row.names = TRUE)
@@ -137,7 +125,7 @@ COLOR_PALETTE = c("red", "orange", "yellow", "pink", "green", "cyan", "blue", "p
 Idents(samples.combined.list.combined) = "seurat_clusters"
 
 head(as.data.frame(Idents(samples.combined.list.combined)))
-table(Idents(samples.combined.list.combined))               ############# IT SHOWS the NUMBER of CELLS in EACH CLUSTER !!!!!!!!!!!!!!
+table(Idents(samples.combined.list.combined))               ############# IT SHOWS the NUMBER of CELLS in EACH CLUSTER 
 
 THE_CLUSTERS = sort(unique((as.data.frame(Idents(samples.combined.list.combined))[,1])))
 length(THE_CLUSTERS)
